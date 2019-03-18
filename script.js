@@ -4,14 +4,16 @@ window.onload = function () {
 
 	// const endpoint ="https://forismatic.com/en/api/";
 	// const endpoint="https://talaikis.com/api/quotes/random" ; 
-	const endpoint="https://talaikis.com/api/quotes/"
+	const endpoint="https://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=30"
 
 	fetch(endpoint)
 			.then(function (response) {
 				return response.json();
+				console.log(response);
 			})
 			.then(function (data) {
 				console.log(data);
+				console.log(data.length)
 				var randomNumber = Math.floor(Math.random() * (data.length));
 				var ran = Math.floor(Math.random() * data.length );
 				console.log(ran);
@@ -19,10 +21,11 @@ window.onload = function () {
 				var quote = document.getElementById("quote");
 				var author = document.getElementById("author");
 				var tweetbutton = document.getElementById("tweetquote");
-				quote.textContent = data[randomNumber].quote;
+				//quote.textContent = data[randomNumber].content;
+				quote.innerHTML += data[randomNumber].content;
 				console.log(quote.textContent)
-				author.textContent = data[randomNumber].author;
-				tweetbutton.href = "https://twitter.com/intent/tweet/?text=" + data[randomNumber].quote;
+				author.textContent = data[randomNumber].title;
+				tweetbutton.href = "https://twitter.com/intent/tweet/?text=" + data[randomNumber].content.replace("<p>", "").replace("</p>", "");
 				//lie.appendChild(document.createTextNode())			
 				quotes = data;
 			})
@@ -42,9 +45,10 @@ window.onload = function () {
 		var quote = document.getElementById("quote");
 		var author = document.getElementById("author");
 		var tweetbutton = document.getElementById("tweetquote");
-		quote.textContent = quotes[randomNumber].quote;
-		author.textContent = quotes[randomNumber].author;
-		tweetbutton.href = "https://twitter.com/intent/tweet/?text=" + data[randomNumber].quote;
+		// quote.textContent = quotes[randomNumber].content;
+		quote.innerHTML = quotes[randomNumber].content;
+		author.textContent = quotes[randomNumber].title;
+		tweetbutton.href = "https://twitter.com/intent/tweet/?text=" + data[randomNumber].content.replace("<p>", "").replace("</p>", "");
 		//lie.appendChild(document.createTextNode())			
 	}
 	
